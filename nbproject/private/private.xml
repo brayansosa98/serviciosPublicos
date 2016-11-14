@@ -3,15 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Entidades/hogares.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Negocio/tiposServiciosN.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Servlets/hogaresServlet.java</file>
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/auth.parametrizacion.jsp</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/auth.html</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/JS/state.js</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/auth.hogares.jsp</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/topnav.html</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/auth.home.html</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/JS/complementos/angular-material/docs.css</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/index.jsp</file>
-            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/web/JS/app.js</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Persistencia/daoTiposServicio.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Servlets/parametrizacionServlet.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Persistencia/daoHogares.java</file>
+            <file>file:/C:/Users/USER/Documents/NetBeansProjects/serviciosPublicos/src/java/com/serviciosPubli/Entidades/tipoServicio.java</file>
         </group>
     </open-files>
 </project-private>

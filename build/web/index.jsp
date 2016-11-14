@@ -15,7 +15,16 @@ and open the template in the editor.
         <link rel="stylesheet" src="JS/complementos/am-table/md-data-table.min.css">
     </head>
     <body>  
-        <div ui-view autoscroll="false" class="mainView-animate"></div>
+        <%
+            String targetModulo = request.getAttribute("targetModulo") == null ? "auth.home.html" : (String) request.getAttribute("targetModulo");
+        %>                    
+        <div class="docs-body layout-row" layout="row">
+            <div ng-include src="'sidebar.html'"></div>
+            <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" style="margin-left: 273px">
+                <jsp:include page="<%=targetModulo%>" flush="true"/>
+                <div autoscroll="true" ui-view></div>
+            </div>
+        </div>   
 
         <!--javaScripts-->
         <script src="JS/complementos/angular.min.js"></script>

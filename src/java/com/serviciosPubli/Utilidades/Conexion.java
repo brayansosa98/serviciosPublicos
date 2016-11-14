@@ -14,7 +14,7 @@ public class Conexion {
     public Connection conexion() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306", "serviPublic", "");
+            con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/serviciospublicos", "serviPublic", "");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("ClassNotFoundException  :"
                     + e.getMessage());
@@ -41,11 +41,11 @@ public class Conexion {
         Connection con;
         
         try {
-            ResultSet r = c.getCon().prepareStatement(com.serviciosPubli.Persistencia.SQLHelpers.getHogares()).executeQuery();
+            ResultSet r = c.getCon().prepareStatement(com.serviciosPubli.Persistencia.SQLHelpers.getTiposServicio()).executeQuery();
             if (r.next()) {
-                System.out.println("Nombre :" + r.getString(1));
+                System.out.println("Nombre :" + r.getString(2));
                 while (r.next()) {
-                    System.out.println("Nombre :" + r.getString(1));
+                    System.out.println("Nombre :" + r.getString(2));
                 }// fin while
             } else {
                 System.out.println("No hay datos ");
