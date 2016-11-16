@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.serviciosPubli.Servlets;
 
+import com.serviciosPubli.Negocio.hogaresN;
+import com.serviciosPubli.Persistencia.daoHogares;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,13 +37,40 @@ public class hogaresServlet extends HttpServlet {
 
         String modulo = "./auth.hogares.jsp";
         String pagina = "./index.jsp";
-        
-        String men = "";
-        
-        request.setAttribute("listado", null);
 
+        request.setAttribute("targetModulo", modulo);
+        request.setAttribute("listado", null);
         request.setAttribute("mensaje", null);
+        String men = "";
+
+        String txtCodigoHogar = request.getParameter("txtCodigoHogar");
+        String txtPagoElec = request.getParameter("txtPagoElec");
+        String txtPagoAgua = request.getParameter("txtPagoAgua");
+        String txtPagoGas = request.getParameter("txtPagoGas");
+
+        hogaresN hoN = new hogaresN();
         
+        try {
+            request.setAttribute("listado", hoN.listadoHogares());
+        } catch (Exception er) {
+            request.setAttribute(men, er.getMessage());
+        }
+
+        if ("guardarHogar".equals(request.getParameter("action"))) {
+            try {
+                hoN.insertarPagoHogar(txtCodigoHogar, txtPagoElec, txtPagoAgua, txtPagoGas);
+            } catch (Exception er) {
+                men = "" + er.getMessage();
+            }
+            try {
+            request.setAttribute("listado", hoN.listadoHogares());
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+        if ("actualizar".equals(request.getParameter("action"))) {
+            
+        }
         request.setAttribute("mensaje", men);
         request.getRequestDispatcher(pagina).forward(request, response);
     }

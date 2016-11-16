@@ -1,5 +1,7 @@
 package com.serviciosPubli.Entidades;
 
+import java.sql.Timestamp;
+
 public class tipoServicio {
 
     String id_servicio;
@@ -7,12 +9,12 @@ public class tipoServicio {
     String valor_subsidio;
     String limite_pago;
     String calculo_manual;
-    String fecha_actualizacion;
+    Timestamp fecha_actualizacion;
 
     public tipoServicio() {
     }
 
-    public tipoServicio(String id_servicio, String nombre, String valor_subsidio, String limite_pago, String calculo_manual, String fecha_actualizacion) {
+    public tipoServicio(String id_servicio, String nombre, String valor_subsidio, String limite_pago, String calculo_manual, Timestamp fecha_actualizacion) {
         this.id_servicio = id_servicio;
         this.nombre = nombre;
         this.valor_subsidio = valor_subsidio;
@@ -61,11 +63,11 @@ public class tipoServicio {
         this.calculo_manual = calculo_manual;
     }
 
-    public String getFecha_actualizacion() {
+    public Timestamp getFecha_actualizacion() {
         return fecha_actualizacion;
     }
 
-    public void setFecha_actualizacion(String fecha_actualizacion) {
+    public void setFecha_actualizacion(Timestamp fecha_actualizacion) {
         this.fecha_actualizacion = fecha_actualizacion;
     }
 

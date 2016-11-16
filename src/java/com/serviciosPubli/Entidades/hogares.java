@@ -1,24 +1,26 @@
 package com.serviciosPubli.Entidades;
 
+import java.sql.Timestamp;
+
 public class hogares {
-    
+
     String id;
     String valor_agua;
     String valor_elec;
-    String valor_gas; 
-    String fecha;
+    String valor_gas;
+    Timestamp fecha;
 
-    public hogares(String id, String valor_agua, String valor_elec, String valor_gas, String fecha) {
+    public hogares(String id, String valor_agua, String valor_elec, String valor_gas, Timestamp fecha) {
         this.id = id;
         this.valor_agua = valor_agua;
         this.valor_elec = valor_elec;
         this.valor_gas = valor_gas;
         this.fecha = fecha;
     }
-
-    public hogares() {
+    
+    public hogares(){
     }
-
+    
     public String getId() {
         return id;
     }
@@ -51,13 +53,12 @@ public class hogares {
         this.valor_gas = valor_gas;
     }
 
-    public String getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
-    
-    
+
 }

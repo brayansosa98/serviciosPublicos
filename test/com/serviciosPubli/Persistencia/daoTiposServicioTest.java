@@ -8,6 +8,7 @@ package com.serviciosPubli.Persistencia;
 import com.serviciosPubli.Entidades.tipoServicio;
 import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -49,16 +50,17 @@ public class daoTiposServicioTest {
         System.out.println("listaTiposServicios");
         Connection con = new Conexion().getCon();
         daoTiposServicio instance = new daoTiposServicio();
-        //List<tipoServicio> expResult = ;
-        
+        Boolean expResult = false;
         List<tipoServicio> result = instance.listaTiposServicios(con);
-       
-        System.out.println(result);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        if (!result.equals(expResult)) {
-//            fail("The test case is a prototype.");
-//        }
+        tipoServicio tipoSe = result.get(1);
+        if (tipoSe.getId_servicio().equals("2")) {
+            expResult = true;
+        }
+        //assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        if (!expResult) {
+            fail("The test case is a prototype.");
+        }
     }
 
     /**

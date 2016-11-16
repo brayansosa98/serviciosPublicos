@@ -7,6 +7,7 @@
 package com.serviciosPubli.Persistencia;
 
 import com.serviciosPubli.Entidades.hogares;
+import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
 import java.util.List;
 import org.junit.After;
@@ -47,7 +48,7 @@ public class daoHogaresTest {
     @Test
     public void testListaHogares() {
         System.out.println("listaHogares");
-        Connection con = null;
+        Connection con = new Conexion().getCon();
         daoHogares instance = new daoHogares();
         List<hogares> expResult = null;
         List<hogares> result = instance.listaHogares(con);
