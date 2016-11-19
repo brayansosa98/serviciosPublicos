@@ -24,7 +24,7 @@ public class hogaresN {
     public void insertarPagoHogar(String id, String valo_elec, String valo_agua, String valo_gas) throws Exception {
         Conexion con = new Conexion();
         String mensajeError = "";
-        
+
         if (dao.existeHogar(con.getCon(), id)) {
             mensajeError = dao.setAgregarPagoHogar(con.getCon(), id, valo_elec, valo_agua, valo_gas);
         } else {
@@ -37,6 +37,40 @@ public class hogaresN {
         if (!"".equals(mensajeError)) {
             throw new Exception(mensajeError);
         }
+    }
+
+    public boolean valorValido(String valor, boolean alfa) {
+        char Caracter;
+        int ASCII, mayusc, longi, num, minusc, espe;
+        mayusc = 0;
+        minusc = 0;
+        longi = 0;
+        num = 0;
+        espe = 0;
+        for (int i = 0; i < valor.length(); i++) {
+            Caracter = valor.charAt(i);
+            ASCII = Caracter;
+            if (ASCII >= 65 && ASCII <= 90) {
+                mayusc = mayusc + 1;
+            } else if (ASCII >= 48 && ASCII <= 57) {
+                num = num + 1;
+            } else if (ASCII >= 97 && ASCII <= 122) {
+                minusc = minusc + 1;
+            } else {
+                espe = espe + 1;
+            }
+        }
+        if (alfa) {
+            if (mayusc >= 0 && minusc >= 0 && espe == 0 && num >= 0) {
+                return true;
+            }
+        } else {
+            if (mayusc == 0 && minusc == 0 && espe == 0 && num >= 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

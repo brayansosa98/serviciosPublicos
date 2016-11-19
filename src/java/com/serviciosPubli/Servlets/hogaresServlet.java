@@ -50,7 +50,7 @@ public class hogaresServlet extends HttpServlet {
         String txtPagoGas = request.getParameter("txtPagoGas");
 
         hogaresN hoN = new hogaresN();
-        
+
         try {
             request.setAttribute("listado", hoN.listadoHogares());
         } catch (Exception er) {
@@ -59,12 +59,28 @@ public class hogaresServlet extends HttpServlet {
 
         if ("guardarHogar".equals(request.getParameter("action"))) {
             try {
-                hoN.insertarPagoHogar(txtCodigoHogar, txtPagoElec, txtPagoAgua, txtPagoGas);
+                boolean valCodHohgar = hoN.valorValido(txtCodigoHogar, true);
+                boolean valPagEle = hoN.valorValido(txtPagoElec, false);
+                boolean valPagAgu = hoN.valorValido(txtPagoAgua, false);
+                boolean valPagGas = hoN.valorValido(txtPagoGas, false);
+                if (valCodHohgar && valPagEle && valPagAgu && valPagGas) {
+                    hoN.insertarPagoHogar(txtCodigoHogar, txtPagoElec, txtPagoAgua, txtPagoGas);
+                } else {
+                    if (!valCodHohgar) {
+                        men = "El código del hogar solo debe contener carecteres alfanuméricoss";
+                    } else if (!valPagEle) {
+                        men = "El pago electricidad solo debe contener números";
+                    } else if (!valPagAgu) {
+                        men = "El pago agua solo debe contener números";
+                    } else if (!valPagGas) {
+                        men = "El pago gas solo debe contener números";
+                    }
+                }
             } catch (Exception er) {
                 men = "" + er.getMessage();
             }
             try {
-            request.setAttribute("listado", hoN.listadoHogares());
+                request.setAttribute("listado", hoN.listadoHogares());
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }

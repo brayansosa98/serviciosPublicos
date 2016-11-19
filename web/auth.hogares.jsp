@@ -44,7 +44,6 @@
                             id="guardarHogar" type="submit" name="action" value="guardarHogar" ng-disabled="frmAgregarHogar.$invalid">
                         <span>GUARDAR</span>
                     </button>
-                    <%=men%>
                 </form>
                 <md-button ng-click="toggleLeft()" class="md-accent">
                     Close this Sidenav
@@ -57,6 +56,7 @@
                 <div layout-xs="row" class="layout" style="width: 100%;">
 
                 </div> 
+                <%=men%>
                 <md-input-container class="md-block flex-gt-sm" flex-gt-sm="">
                     <label>Buscar</label>
                     <input id="txtPagoGas" ng-model="search" name="txtPagoGas" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false">

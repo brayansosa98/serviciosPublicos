@@ -63,7 +63,17 @@ public class parametrizacionServlet extends HttpServlet {
 
         if ("actualizarElectricidad".equals(request.getParameter("action"))) {
             try {
-                tsN.ActualizarTipoServicio("1", valor_subsidio_Electricidad, limite_pago_Electricidad);
+                boolean valElec = tsN.valorValido(valor_subsidio_Electricidad);
+                boolean limElec = tsN.valorValido(limite_pago_Electricidad);
+                if (limElec == true && valElec == true) {
+                    tsN.ActualizarTipoServicio("1", valor_subsidio_Electricidad, limite_pago_Electricidad);
+                } else {
+                    if (!valElec) {
+                        men = "El campo valor subsidio (Electricidad) solo debe contener números";
+                    } else {
+                        men = "El campo limite de pago (Electricidad) solo debe contener números";
+                    }
+                }
             } catch (Exception er) {
                 men = "" + er.getMessage();
             }
@@ -76,7 +86,17 @@ public class parametrizacionServlet extends HttpServlet {
 
         if ("actualizarAgua".equals(request.getParameter("action"))) {
             try {
-                tsN.ActualizarTipoServicio("2", valor_subsidio_agua, limite_pago_agua);
+                boolean valElec = tsN.valorValido(valor_subsidio_agua);
+                boolean limElec = tsN.valorValido(limite_pago_agua);
+                if (limElec == true && valElec == true) {
+                    tsN.ActualizarTipoServicio("2", valor_subsidio_agua, limite_pago_agua);
+                } else {
+                    if (!valElec) {
+                        men = "El campo valor subsidio (Agua) solo debe contener números";
+                    } else {
+                        men = "El campo limite de pago (Agua) solo debe contener números";
+                    }
+                }
             } catch (Exception er) {
                 men = "" + er.getMessage();
             }
@@ -89,7 +109,17 @@ public class parametrizacionServlet extends HttpServlet {
 
         if ("actualizarGas".equals(request.getParameter("action"))) {
             try {
-                tsN.ActualizarTipoServicio("3", valor_subsidio_Gas, limite_pago_Gas);
+                boolean valGas = tsN.valorValido(valor_subsidio_Gas);
+                boolean limGas = tsN.valorValido(limite_pago_Gas);
+                if (limGas == true && valGas == true) {
+                    tsN.ActualizarTipoServicio("3", valor_subsidio_Gas, limite_pago_Gas);
+                } else {
+                    if (!valGas) {
+                        men = "El campo valor subsidio (Gas) solo debe contener números";
+                    } else {
+                        men = "El campo limite de pago (Gas) solo debe contener números";
+                    }
+                }
             } catch (Exception er) {
                 men = "" + er.getMessage();
             }

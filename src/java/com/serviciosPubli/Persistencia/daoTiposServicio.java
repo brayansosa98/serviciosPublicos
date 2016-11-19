@@ -55,7 +55,7 @@ public class daoTiposServicio {
             PreparedStatement p = con.prepareStatement("UPDATE tipos_servicios SET valor_subsidio=\"" +valor_subsidio+ "\", limite_pago=\"" +limite_pago+ "\" WHERE id_servicio=\"" +id+ "\"");
             p.execute();
             if (p.getUpdateCount() > 0) {
-                res = "Tipo servicio guardado con exitoso";
+                res = "Tipo servicio guardado con exito";
             } else {
                 res = "¡Error! Tipo servicio no editado";
             }// fin si
