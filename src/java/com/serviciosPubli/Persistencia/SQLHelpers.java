@@ -16,6 +16,10 @@ public class SQLHelpers {
     public static String getHogar(String id) {
         return "SELECT * FROM hogares where id_hogar=" + id;
     }
+    
+    public static String getPagosHogar(String id) {
+        return "SELECT * FROM pagos_servicios where id_hogar=\"" + id + "\" order by fecha DESC";
+    }
 
     public static String setHogar(String id) {
         return "INSERT into hogares (id_hogar) values (\"" + id + "\");";

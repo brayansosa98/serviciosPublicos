@@ -77,10 +77,6 @@ public class daoTiposServicioTest {
         String expResult = "Tipo servicio editado";
         String result = instance.actualizarTipoServicio(con, id, valor_subsidio, limite_pago);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        if (result != "Tipo servicio editado") {
-            fail("The test case is a prototype.");
-        }
     }
 
 }

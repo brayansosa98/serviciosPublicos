@@ -54,7 +54,42 @@ public class daoHogares {
         }
         return hogares;
     }
-
+    
+    public List<hogares> listaPagosHogar(Connection con, String id) {
+        List<tipoServicio> resultado = new ArrayList<tipoServicio>();
+        List<hogares> hogares = new ArrayList<hogares>();
+        try {
+            PreparedStatement p = con.prepareStatement(SQLHelpers.getPagosHogar(id));
+            ResultSet registros = p.executeQuery();
+            int a = 1;
+            hogares hogarAux = new hogares();
+            while (registros.next()) {
+                if (a == 1) {
+                    hogarAux.setId(registros.getString(1));
+                    hogarAux.setFecha(registros.getTimestamp(3));
+                    hogarAux.setValor_elec(registros.getString(4));
+                }
+                if (a == 2) {
+                    hogarAux.setValor_agua(registros.getString(4));
+                }
+                if (a == 3) {
+                    hogarAux.setValor_gas(registros.getString(4));
+                    hogares.add(hogarAux);
+                    a = 0;
+                    hogarAux = new hogares();
+                }
+                a++;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException clo) {
+            }
+        }
+        return hogares;
+    }
+    
     public boolean existeHogar(Connection con, String id) {
         List<tipoServicio> resultado = new ArrayList<tipoServicio>();
         try {

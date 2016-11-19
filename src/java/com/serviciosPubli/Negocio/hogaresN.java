@@ -21,6 +21,12 @@ public class hogaresN {
         return dao.listaHogares(c);
     }
 
+    public List<hogares> listadoPagosHogar(String id) {
+        Connection c;
+        c = new Conexion().getCon();
+        return dao.listaPagosHogar(c, id);
+    }
+
     public void insertarPagoHogar(String id, String valo_elec, String valo_agua, String valo_gas) throws Exception {
         Conexion con = new Conexion();
         String mensajeError = "";

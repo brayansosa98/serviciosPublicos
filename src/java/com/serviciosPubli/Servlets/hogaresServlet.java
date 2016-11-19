@@ -41,13 +41,15 @@ public class hogaresServlet extends HttpServlet {
         request.setAttribute("targetModulo", modulo);
         request.setAttribute("listado", null);
         request.setAttribute("mensaje", null);
-        request.setAttribute("abrirModal", null);
+        request.setAttribute("filtro", null);
         String men = "";
 
         String txtCodigoHogar = request.getParameter("txtCodigoHogar");
         String txtPagoElec = request.getParameter("txtPagoElec");
         String txtPagoAgua = request.getParameter("txtPagoAgua");
         String txtPagoGas = request.getParameter("txtPagoGas");
+
+        String txtSearch = request.getParameter("txtSearch");
 
         hogaresN hoN = new hogaresN();
 
@@ -85,8 +87,22 @@ public class hogaresServlet extends HttpServlet {
                 request.setAttribute(men, er.getMessage());
             }
         }
-        if ("agregar".equals(request.getParameter("action"))) {
-            request.setAttribute("abrirModal", true);
+        if ("consultarHogar".equals(request.getParameter("action"))) {
+            try {
+                request.setAttribute("listado", hoN.listadoPagosHogar(txtSearch));
+                men = "Registro(s) de pago del hogar con código \" " + txtSearch + " \"";
+                request.setAttribute("filtro", "true");
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+        if ("listar".equals(request.getParameter("action"))) {
+            try {
+                request.setAttribute("listado", hoN.listadoHogares());
+                request.setAttribute("filtro", "false");
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
         }
         request.setAttribute("mensaje", men);
         request.getRequestDispatcher(pagina).forward(request, response);

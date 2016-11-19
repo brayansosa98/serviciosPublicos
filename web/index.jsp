@@ -15,9 +15,9 @@ and open the template in the editor.
         <link rel="stylesheet" href="JS/complementos/angular-material/icon.css">
         <link rel="stylesheet" src="JS/complementos/am-table/md-data-table.min.css">        
         <link rel="stylesheet" src="JS/complementos/materialdesignicons.min.css">        
-        
+
     </head>
-    <body id="body">  
+    <body id="body" >  
         <%
             String targetModulo = request.getAttribute("targetModulo") == null ? "auth.home.html" : (String) request.getAttribute("targetModulo");
         %>         
@@ -27,8 +27,8 @@ and open the template in the editor.
                 <jsp:include page="<%=targetModulo%>" flush="true"/>
                 <div autoscroll="true" ui-view></div>
             </div>
-        </div>   
-        
+        </div>  
+
         <!--javaScripts-->
         <script src="JS/complementos/angular.min.js"></script>
         <script src="JS/complementos/angular-ui-router.min.js"></script>

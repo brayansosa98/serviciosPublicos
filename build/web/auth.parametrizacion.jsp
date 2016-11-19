@@ -24,8 +24,7 @@
                         <div layout-xs="row" class="layout" style="width: 30%;">
                             <md-input-container class="md-block flex-gt-sm" flex-gt-sm="">
                                 <label for="input_61">Limite pago</label>
-                                <input id="txtlimite_pago_<%= ts.getNombre()%>" name="txtlimite_pago_<%= ts.getNombre()%>" value="<%=ts.getLimite_pago()%>" 
-                                    s   class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" required>
+                                <input id="txtlimite_pago_<%= ts.getNombre()%>" name="txtlimite_pago_<%= ts.getNombre()%>" value="<%=ts.getLimite_pago()%>"   class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" required>
                             </md-input-container>
                         </div>
                         <button class="md-button md-ink-ripple flex-gt-md-15 flex-30" 
