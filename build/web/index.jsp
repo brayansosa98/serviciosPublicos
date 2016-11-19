@@ -12,12 +12,15 @@ and open the template in the editor.
         <!--CSS-->
         <link rel="stylesheet" href="JS/complementos/angular-material/angular-material.min.css">
         <link rel="stylesheet" href="JS/complementos/angular-material/docs.css">
-        <link rel="stylesheet" src="JS/complementos/am-table/md-data-table.min.css">
+        <link rel="stylesheet" href="JS/complementos/angular-material/icon.css">
+        <link rel="stylesheet" src="JS/complementos/am-table/md-data-table.min.css">        
+        <link rel="stylesheet" src="JS/complementos/materialdesignicons.min.css">        
+        
     </head>
-    <body>  
+    <body id="body">  
         <%
             String targetModulo = request.getAttribute("targetModulo") == null ? "auth.home.html" : (String) request.getAttribute("targetModulo");
-        %>                    
+        %>         
         <div class="docs-body layout-row" layout="row">
             <div ng-include src="'sidebar.html'"></div>
             <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" style="margin-left: 273px">
@@ -25,7 +28,7 @@ and open the template in the editor.
                 <div autoscroll="true" ui-view></div>
             </div>
         </div>   
-
+        
         <!--javaScripts-->
         <script src="JS/complementos/angular.min.js"></script>
         <script src="JS/complementos/angular-ui-router.min.js"></script>
@@ -34,7 +37,10 @@ and open the template in the editor.
         <script src="JS/complementos/angular-ui-router.min.js"></script>
         <script src="JS/complementos/angular-material/angular-material.min.js"></script>
         <script src="JS/complementos/angular-messages.min.js"></script>
+        <script src="JS/complementos/angular-strap/angular-strap.min.js"></script>
+        <script src="JS/complementos/angular-strap/angular-strap.tpl.min.js"></script>
         <script src="JS/complementos/am-table/md-data-table.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
         <script src="JS/app.js"></script>
         <script src="JS/state.js"></script>
     </body>

@@ -41,6 +41,7 @@ public class hogaresServlet extends HttpServlet {
         request.setAttribute("targetModulo", modulo);
         request.setAttribute("listado", null);
         request.setAttribute("mensaje", null);
+        request.setAttribute("abrirModal", null);
         String men = "";
 
         String txtCodigoHogar = request.getParameter("txtCodigoHogar");
@@ -68,8 +69,8 @@ public class hogaresServlet extends HttpServlet {
                 request.setAttribute(men, er.getMessage());
             }
         }
-        if ("actualizar".equals(request.getParameter("action"))) {
-            
+        if ("agregar".equals(request.getParameter("action"))) {
+            request.setAttribute("abrirModal", true);
         }
         request.setAttribute("mensaje", men);
         request.getRequestDispatcher(pagina).forward(request, response);
