@@ -4,6 +4,7 @@ import com.serviciosPubli.Entidades.hogares;
 import com.serviciosPubli.Persistencia.daoHogares;
 import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -32,7 +33,12 @@ public class hogaresN {
         String mensajeError = "";
 
         if (dao.existeHogar(con.getCon(), id)) {
-            mensajeError = dao.setAgregarPagoHogar(con.getCon(), id, valo_elec, valo_agua, valo_gas);
+            Timestamp fecha = dao.getUltimoPago(con.getCon(), id).getFecha();
+            if (dao.fechaValida(con.getCon(), fecha)) {
+                mensajeError = dao.setAgregarPagoHogar(con.getCon(), id, valo_elec, valo_agua, valo_gas);
+            } else {
+                mensajeError = "No se puede agregar el pago, debe esperar un día para registrar otro pago al hogar con código: " + id;
+            }
         } else {
             mensajeError = dao.setGuardarHogar(con.getCon(), id);
             if (mensajeError.equals("Hogar agregado")) {
@@ -79,4 +85,7 @@ public class hogaresN {
         return false;
     }
 
+    public List<hogares> listaHogaresUltimoPago() {
+        return dao.listaHogaresUltimoPago(listadoHogares());
+    }
 }

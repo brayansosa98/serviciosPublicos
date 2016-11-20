@@ -6,11 +6,12 @@
 package com.serviciosPubli.Persistencia;
 
 import com.serviciosPubli.Entidades.hogares;
-import com.serviciosPubli.Entidades.tipoServicio;
+import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,7 @@ import java.util.List;
 public class daoHogares {
 
     public List<hogares> listaHogares(Connection con) {
-        List<tipoServicio> resultado = new ArrayList<tipoServicio>();
-        List<hogares> hogares = new ArrayList<hogares>();
+        List<hogares> hogares = new ArrayList<>();
         try {
             PreparedStatement p = con.prepareStatement(SQLHelpers.getPagos());
             ResultSet registros = p.executeQuery();
@@ -54,10 +54,9 @@ public class daoHogares {
         }
         return hogares;
     }
-    
+
     public List<hogares> listaPagosHogar(Connection con, String id) {
-        List<tipoServicio> resultado = new ArrayList<tipoServicio>();
-        List<hogares> hogares = new ArrayList<hogares>();
+        List<hogares> hogares = new ArrayList<>();
         try {
             PreparedStatement p = con.prepareStatement(SQLHelpers.getPagosHogar(id));
             ResultSet registros = p.executeQuery();
@@ -89,9 +88,8 @@ public class daoHogares {
         }
         return hogares;
     }
-    
+
     public boolean existeHogar(Connection con, String id) {
-        List<tipoServicio> resultado = new ArrayList<tipoServicio>();
         try {
             PreparedStatement p = con.prepareStatement(SQLHelpers.getHogar(id));
             ResultSet registros = p.executeQuery();
@@ -189,5 +187,81 @@ public class daoHogares {
             }
         }// fin finally
         return res;
+    }
+
+    public hogares getUltimoPago(Connection con, String id) {
+        hogares hogarAux = new hogares();
+        try {
+            PreparedStatement p = con.prepareStatement(SQLHelpers.getPagosHogar(id));
+            ResultSet registros = p.executeQuery();
+            int a = 1;
+            while (registros.next() && a < 4) {
+                if (a == 1) {
+                    hogarAux.setId(registros.getString(1));
+                    hogarAux.setFecha(registros.getTimestamp(3));
+                    hogarAux.setValor_elec(registros.getString(4));
+                }
+                if (a == 2) {
+                    hogarAux.setValor_agua(registros.getString(4));
+                }
+                if (a == 3) {
+                    hogarAux.setValor_gas(registros.getString(4));
+                }
+                a++;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException clo) {
+            }
+        }
+        return hogarAux;
+    }
+
+    public boolean fechaValida(Connection con, Timestamp fecha) {
+        try {
+            PreparedStatement p = con.prepareStatement(SQLHelpers.getDiasDiferencia(fecha));
+            ResultSet registros = p.executeQuery();
+            while (registros.next()) {
+                int days = Integer.parseInt(registros.getString(1));
+                if (days >= 1) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException clo) {
+            }
+        }
+
+        return false;
+    }
+
+    public List<hogares> listaHogaresUltimoPago(List<hogares> hogares) {
+        String[] ids = new String[200];
+        List<hogares> hogaresAux = new ArrayList<>();
+        for (int i = 0; i < hogares.size(); i++) {
+            String id = hogares.get(i).getId();
+            boolean exit = existeElId(ids, id);
+            if (!exit) {
+                ids[i] = id;
+                Connection c;
+                c = new Conexion().getCon();
+                hogaresAux.add(getUltimoPago(c, id));
+            }
+        }
+        return hogaresAux;
+    }
+
+    public boolean existeElId(String[] ids, String id) {
+        for (String id1 : ids) {
+            if (id.equals(id1)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

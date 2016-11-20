@@ -1,5 +1,6 @@
 package com.serviciosPubli.Negocio;
 
+import com.serviciosPubli.Entidades.hogares;
 import com.serviciosPubli.Entidades.tipoServicio;
 import com.serviciosPubli.Persistencia.daoTiposServicio;
 import com.serviciosPubli.Utilidades.Conexion;
@@ -62,5 +63,24 @@ public class tiposServiciosN {
         }
 
         return false;
+    }
+
+    public double promedioPago(String idTipoServicio, List<hogares> hogares) {
+        double prom = 0;
+        for (hogares hogar : hogares) {
+            switch (idTipoServicio) {
+                case "1":
+                    prom = prom + Integer.parseInt(hogar.getValor_elec());
+                    break;
+                case "2":
+                    prom = prom + Integer.parseInt(hogar.getValor_agua());
+                    break;
+                case "3":
+                    prom = prom + Integer.parseInt(hogar.getValor_gas());
+                    break;
+            }
+        }
+        prom = prom / hogares.size();
+        return prom;
     }
 }

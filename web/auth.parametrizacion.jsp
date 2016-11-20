@@ -29,6 +29,11 @@
                         </div>
                         <button class="md-button md-ink-ripple flex-gt-md-15 flex-30" 
                                 flex-gt-md="15" flex="30" md-colors="{background: 'indigo'}" md-colors-watch="false" style="background: rgb(63, 81, 181); color: rgba(255, 255, 255, 0.870588);" 
+                                id="calcular<%= ts.getNombre()%>" type="submit" name="action" value="calcular<%= ts.getNombre()%>" ng-disabled="frm<%= ts.getNombre()%>.$invalid">
+                            <span>Calcular promedio</span>
+                        </button>
+                        <button class="md-button md-ink-ripple flex-gt-md-15 flex-30" 
+                                flex-gt-md="15" flex="30" md-colors="{background: 'indigo'}" md-colors-watch="false" style="background: rgb(63, 81, 181); color: rgba(255, 255, 255, 0.870588);" 
                                 id="actualizar<%= ts.getNombre()%>" type="submit" name="action" value="actualizar<%= ts.getNombre()%>" ng-disabled="frm<%= ts.getNombre()%>.$invalid">
                             <span>GUARDAR</span>
                         </button>

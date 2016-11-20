@@ -1,7 +1,6 @@
 package com.serviciosPubli.Persistencia;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.IDDV;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class SQLHelpers {
 
@@ -14,11 +13,11 @@ public class SQLHelpers {
     }
 
     public static String getHogar(String id) {
-        return "SELECT * FROM hogares where id_hogar=" + id;
+        return "SELECT * FROM hogares where id_hogar=\"" + id + "\"";
     }
-    
+
     public static String getPagosHogar(String id) {
-        return "SELECT * FROM pagos_servicios where id_hogar=\"" + id + "\" order by fecha DESC";
+        return "SELECT * FROM pagos_servicios where id_hogar=\"" + id + "\" order by fecha DESC;";
     }
 
     public static String setHogar(String id) {
@@ -31,6 +30,10 @@ public class SQLHelpers {
 
     public static String getPagos() {
         return "SELECT * from pagos_servicios order by fecha DESC";
+    }
+
+    public static String getDiasDiferencia(Timestamp fecha) {
+        return "SELECT DATEDIFF(NOW(),'" + fecha + "');";
     }
 
 }

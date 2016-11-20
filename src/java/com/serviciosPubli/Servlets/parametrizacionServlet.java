@@ -6,6 +6,7 @@
 package com.serviciosPubli.Servlets;
 
 import com.serviciosPubli.Entidades.tipoServicio;
+import com.serviciosPubli.Negocio.hogaresN;
 import com.serviciosPubli.Negocio.tiposServiciosN;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,6 +52,8 @@ public class parametrizacionServlet extends HttpServlet {
         String men = "";
 
         tiposServiciosN tsN = new tiposServiciosN();
+        hogaresN hoN = new hogaresN();
+
         request.setAttribute("listado", null);
 
         request.setAttribute("mensaje", null);
@@ -125,6 +128,30 @@ public class parametrizacionServlet extends HttpServlet {
             }
             try {
                 request.setAttribute("listado", tsN.listadoTiposServicio());
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+
+        if ("calcularElectricidad".equals(request.getParameter("action"))) {
+            try {
+                JOptionPane.showConfirmDialog(null, tsN.promedioPago("1", hoN.listaHogaresUltimoPago()));
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+        
+        if ("calcularAgua".equals(request.getParameter("action"))) {
+            try {
+                JOptionPane.showConfirmDialog(null, tsN.promedioPago("2", hoN.listaHogaresUltimoPago()));
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+        
+        if ("calcularGas".equals(request.getParameter("action"))) {
+            try {
+                JOptionPane.showConfirmDialog(null, tsN.promedioPago("3", hoN.listaHogaresUltimoPago()));
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }

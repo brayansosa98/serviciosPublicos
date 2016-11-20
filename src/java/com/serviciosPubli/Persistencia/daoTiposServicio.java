@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.serviciosPubli.Persistencia;
 
+import com.serviciosPubli.Entidades.hogares;
 import com.serviciosPubli.Entidades.tipoServicio;
+import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,9 +21,11 @@ import javax.swing.JOptionPane;
  * @author USER
  */
 public class daoTiposServicio {
-    
+
+    public daoHogares dao;
+
     public List<tipoServicio> listaTiposServicios(Connection con) {
-        List<tipoServicio> resultado = new ArrayList<tipoServicio>();
+        List<tipoServicio> resultado = new ArrayList<>();
         try {
             PreparedStatement p = con.prepareStatement(SQLHelpers.getTiposServicio());
             ResultSet registros = p.executeQuery();
@@ -44,7 +47,7 @@ public class daoTiposServicio {
         }
         return resultado;
     }
-    
+
     public String actualizarTipoServicio(
             Connection con,
             String id,
@@ -52,21 +55,29 @@ public class daoTiposServicio {
             String limite_pago) {
         String res = "";
         try {
-            PreparedStatement p = con.prepareStatement("UPDATE tipos_servicios SET valor_subsidio=\"" +valor_subsidio+ "\", limite_pago=\"" +limite_pago+ "\" WHERE id_servicio=\"" +id+ "\"");
+            PreparedStatement p = con.prepareStatement("UPDATE tipos_servicios SET valor_subsidio=\"" + valor_subsidio + "\", limite_pago=\"" + limite_pago + "\" WHERE id_servicio=\"" + id + "\"");
             p.execute();
             if (p.getUpdateCount() > 0) {
                 res = "Tipo servicio guardado con exito";
             } else {
                 res = "¡Error! Tipo servicio no editado";
             }// fin si
-        } catch (Exception e) {
+        } catch (SQLException e) {
             res += "" + e.getMessage() + " <br> Causa: " + e.getCause();
         } finally {
             try {
                 con.close();
-            } catch (Exception e2) {
+            } catch (SQLException e2) {
             }
         }
         return res;
     }
+    
+    public List<hogares> listaHogares() {
+        Connection c;
+        c = new Conexion().getCon();
+        return dao.listaHogares(c);
+    }
+
+    
 }
