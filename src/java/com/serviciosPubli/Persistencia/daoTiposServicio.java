@@ -36,6 +36,7 @@ public class daoTiposServicio {
                 ts.setValor_subsidio(registros.getString(3));
                 ts.setLimite_pago(registros.getString(4));
                 ts.setCalculo_manual(registros.getString(5));
+                ts.setFecha_actualizacion(registros.getTimestamp(6));
                 resultado.add(ts);
             }
         } catch (SQLException e) {
@@ -55,7 +56,7 @@ public class daoTiposServicio {
             String limite_pago) {
         String res = "";
         try {
-            PreparedStatement p = con.prepareStatement("UPDATE tipos_servicios SET valor_subsidio=\"" + valor_subsidio + "\", limite_pago=\"" + limite_pago + "\" WHERE id_servicio=\"" + id + "\"");
+            PreparedStatement p = con.prepareStatement(SQLHelpers.updatedTipoService(id, limite_pago, valor_subsidio));
             p.execute();
             if (p.getUpdateCount() > 0) {
                 res = "Tipo servicio guardado con exito";

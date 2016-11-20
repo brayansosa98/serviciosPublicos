@@ -14,6 +14,7 @@
             <md-tab label="<%= ts.getNombre()%>" id="label_<%= ts.getNombre()%>">
                 <md-content class="md-padding">
                     <form name="frm<%= ts.getNombre()%>" action="./parametrizacionServlet" method="POST">
+                        Ultima fecha de actualización: {{<%= ts.getFecha_actualizacion().getTime() %> | date }}
                         <div layout-xs="row" class="layout" style="width: 30%;">
                             <md-input-container class="md-block flex-gt-sm" flex-gt-sm="">
                                 <label for="input_61">Valor subsidio</label>

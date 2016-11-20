@@ -1,4 +1,4 @@
-<md-dialog style="opacity: 1; width: 70%;">
+<md-dialog style="opacity: 1; width: 35%;">
     <form ng-cloak>
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -21,15 +21,63 @@
                             <md-option id="filtro3" value="filtro3">Hogar con menos consumo</md-option>
                         </md-select>
                     </div>
-
+                    
                     <md-content ng-if="tipoFiltro === 'filtro1'">
                         <md-input-container>
                             <label>Desde</label>
-                            <md-datepicker ng-model="desde" name="txtDesde" id="txtDesde"></md-datepicker>
+                            <input input-date type="text"
+                                   name="desde"
+                                   id="inputDesde"
+                                   ng-model="desde"
+                                   container=""
+                                   format="dd/mm/yyyy"
+                                   months-full="{{ month}}"
+                                   months-short="{{ monthShort}}"
+                                   weekdays-full="{{ weekdaysFull}}"
+                                   weekdays-short="{{ weekdaysShort}}"
+                                   weekdays-letter="{{ weekdaysLetter}}"
+                                   disable="disable"
+                                   min="{{ minDate}}"
+                                   max="{{ maxDate}}"
+                                   today="Hoy"
+                                   first-day="1"
+                                   clear="Limpiar"
+                                   close="cerrar"
+                                   select-years="15"
+                                   on-start="onStart()"
+                                   on-render="onRender()"
+                                   on-open="onOpen()"
+                                   on-close="onClose()"
+                                   on-set="onSet()"
+                                   on-stop="onStop()" >
                         </md-input-container>
                         <md-input-container>
                             <label>Hasta</label>
-                            <md-datepicker ng-model="hasta" name="txtHasta" id="txtHasta"></md-datepicker>
+                            <input input-date type="text"
+                                   name="hasta"
+                                   id="inputHasta"
+                                   ng-model="hasta"
+                                   container=""
+                                   format="dd/mm/yyyy"
+                                   months-full="{{ month}}"
+                                   months-short="{{ monthShort}}"
+                                   weekdays-full="{{ weekdaysFull}}"
+                                   weekdays-short="{{ weekdaysShort}}"
+                                   weekdays-letter="{{ weekdaysLetter}}"
+                                   disable="disable"
+                                   min="{{ minDate}}"
+                                   max="{{ maxDate}}"
+                                   today="Hoy"
+                                   first-day="1"
+                                   clear="Limpiar"
+                                   close="cerrar"
+                                   select-years="15"
+                                   on-start="onStart()"
+                                   on-render="onRender()"
+                                   on-open="onOpen()"
+                                   on-close="onClose()"
+                                   on-set="onSet()"
+                                   on-stop="onStop()" >
                         </md-input-container>
                     </md-content>
 
@@ -43,7 +91,7 @@
                             <input id="txtValorFinal" name="txtValorFinal" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" required>
                         </md-input-container>
                     </md-content>
-                    
+
                     <md-button ng-if="tipoFiltro" class="md-primary md-raised" id="filtrar" type="submit" name="action" value="filtroHogar_{{tipoFiltro}}" ng-disabled="frmFiltro.$invalid">
                         buscar
                     </md-button>

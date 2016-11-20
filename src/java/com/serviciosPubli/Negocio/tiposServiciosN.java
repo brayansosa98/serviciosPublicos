@@ -65,8 +65,8 @@ public class tiposServiciosN {
         return false;
     }
 
-    public double promedioPago(String idTipoServicio, List<hogares> hogares) {
-        double prom = 0;
+    public int promedioPago(String idTipoServicio, List<hogares> hogares) {
+        int prom = 0;
         for (hogares hogar : hogares) {
             switch (idTipoServicio) {
                 case "1":
@@ -82,5 +82,14 @@ public class tiposServiciosN {
         }
         prom = prom / hogares.size();
         return prom;
+    }
+
+    public List<tipoServicio> actualizarTiposServicio(List<tipoServicio> servicios, String id, int valor) {
+        for (tipoServicio servicio : servicios) {
+            if (servicio.getId_servicio().equals(id)) {
+                servicio.setValor_subsidio(Integer.toString(valor));
+            }
+        }
+        return servicios;
     }
 }

@@ -30,29 +30,32 @@
                 <br>
                 <center><%=men%></center>
                 <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th><span>Código</span></th>
-                            <th><span>Pago de electricidad</span></th>
-                            <th>Pago de agua</th>
-                            <th>Pago de gas</th>
-                            <th>Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div style="height: 75vh; overflow: auto" >
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><span>Código</span></th>
+                                <th><span>Pago de electricidad</span></th>
+                                <th>Pago de agua</th>
+                                <th>Pago de gas</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <% for (hogares ho : LHO) {%>
-                        <tr>
-                            <td id="cod_<%= ho.getId()%>"><%=ho.getId()%></td>
-                            <td id="<%= ho.getId()%>_<%= ho.getValor_elec()%>"><%= ho.getValor_elec()%></td>
-                            <td id="<%= ho.getId()%>_<%= ho.getValor_agua()%>"><%= ho.getValor_agua()%></td>
-                            <td id="<%= ho.getId()%>_<%= ho.getValor_gas()%>"><%= ho.getValor_gas()%></td>
-                            <td> {{ <%= ho.getFecha().getTime()%> | date}} </td>
-                        </tr>
-                        <%}%>
-                    </tbody>
-                </table>
+                            <% for (hogares ho : LHO) {%>
+                            <tr>
+                                <td id="cod_<%= ho.getId()%>"><%=ho.getId()%></td>
+                                <td id="<%= ho.getId()%>_<%= ho.getValor_elec()%>"><%= ho.getValor_elec()%></td>
+                                <td id="<%= ho.getId()%>_<%= ho.getValor_agua()%>"><%= ho.getValor_agua()%></td>
+                                <td id="<%= ho.getId()%>_<%= ho.getValor_gas()%>"><%= ho.getValor_gas()%></td>
+                                <td> {{ <%= ho.getFecha().getTime()%> | date}} </td>
+                            </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+
+                </div>
                 <div class="footer">
                     <form name="listar" action="./hogaresServlet" method="POST">
                         <md-button id="filtros" ng-click="showAdvanced($event)" class="md-fab md-primary" aria-label="Search home">
@@ -73,3 +76,4 @@
         </md-content>
     </section>
 </div>
+

@@ -135,23 +135,23 @@ public class parametrizacionServlet extends HttpServlet {
 
         if ("calcularElectricidad".equals(request.getParameter("action"))) {
             try {
-                JOptionPane.showConfirmDialog(null, tsN.promedioPago("1", hoN.listaHogaresUltimoPago()));
+                request.setAttribute("listado", tsN.actualizarTiposServicio(tsN.listadoTiposServicio(), "1", tsN.promedioPago("1", hoN.listaHogaresUltimoPago())));
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }
         }
-        
+
         if ("calcularAgua".equals(request.getParameter("action"))) {
             try {
-                JOptionPane.showConfirmDialog(null, tsN.promedioPago("2", hoN.listaHogaresUltimoPago()));
+                request.setAttribute("listado", tsN.actualizarTiposServicio(tsN.listadoTiposServicio(), "2", tsN.promedioPago("2", hoN.listaHogaresUltimoPago())));
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }
         }
-        
+
         if ("calcularGas".equals(request.getParameter("action"))) {
             try {
-                JOptionPane.showConfirmDialog(null, tsN.promedioPago("3", hoN.listaHogaresUltimoPago()));
+                request.setAttribute("listado", tsN.actualizarTiposServicio(tsN.listadoTiposServicio(), "3", tsN.promedioPago("3", hoN.listaHogaresUltimoPago())));
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }
