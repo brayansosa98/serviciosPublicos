@@ -35,5 +35,9 @@ public class SQLHelpers {
     public static String getDiasDiferencia(Timestamp fecha) {
         return "SELECT DATEDIFF(NOW(),'" + fecha + "');";
     }
+    
+    public static String setGuargarHogarSubsidiado() {
+        return "INSERT INTO hogares_subsidiados (id_hogar, id_tiposervicio, valor_subsidio, valor_subsidio_aplicado, limite_pago_aplicado, fecha) VALUES (?,?,?,?,?,now());";
+    }
 
 }

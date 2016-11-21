@@ -64,6 +64,10 @@
                         <md-button id="agregarHogar" ng-click="toggleLeft()" class="md-fab md-primary" aria-label="Add home">
                             <md-icon md-svg-src="icons/add.svg"></md-icon>
                         </md-button>
+                        <md-button id="aplicarSubsidio" class="md-fab md-primary" aria-label="Aplicar subsidio" 
+                                   type="submit" name="action" value="aplicarSubsidio"> 
+                            <md-icon md-svg-src="icons/check.svg"></md-icon>
+                        </md-button>
                         <% if (filtro == "true") {%>
                         <md-button id="listar" class="md-fab md-primary" aria-label="Listar hogares" 
                                    type="submit" name="action" value="listar"> 

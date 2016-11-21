@@ -1,6 +1,9 @@
 package com.serviciosPubli.Negocio;
 
+import com.serviciosPubli.Entidades.hogarSubsidiado;
 import com.serviciosPubli.Entidades.hogares;
+import com.serviciosPubli.Entidades.tipoServicio;
+import com.serviciosPubli.Persistencia.daoHogarSubsidio;
 import com.serviciosPubli.Persistencia.daoHogares;
 import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
@@ -11,6 +14,7 @@ import javax.swing.JOptionPane;
 public class hogaresN {
 
     public daoHogares dao;
+    public daoHogarSubsidio daoHoSub;
 
     public hogaresN() {
         dao = new daoHogares();
@@ -87,5 +91,74 @@ public class hogaresN {
 
     public List<hogares> listaHogaresUltimoPago() {
         return dao.listaHogaresUltimoPago(listadoHogares());
+    }
+
+    public void aplicarSubsidio(List<hogares> listaHogares, List<tipoServicio> ListaTiposServicio) throws Exception {
+        String mensajeError = "";
+        for (hogares hogar : listaHogares) {
+            hogarSubsidiado pagoElec = ordenarDatos(hogar, ListaTiposServicio.get(0));
+            hogarSubsidiado pagoAgua = ordenarDatos(hogar, ListaTiposServicio.get(1));
+            hogarSubsidiado pagoGas = ordenarDatos(hogar, ListaTiposServicio.get(2));
+            //Connection c;
+            //c = new Conexion().getCon();
+            //mensajeError = daoHoSub.setGuargarHogarSubsidiado(c, pagoElec, pagoAgua, pagoGas);
+        }
+        if (!"".equals(mensajeError)) {
+            throw new Exception(mensajeError);
+        }
+    }
+
+    public hogarSubsidiado ordenarDatos(hogares hogar, tipoServicio servicio) {
+        hogarSubsidiado hogarSub = new hogarSubsidiado();
+        hogarSub.setId_hogar(hogar.getId());
+        hogarSub.setId_tiposervicio(servicio.getId_servicio());
+        hogarSub.setLimite_pago_aplicado(servicio.getLimite_pago());
+        int pago = 0;
+        switch (servicio.getId_servicio()) {
+            case "1":
+                pago = Integer.parseInt(hogar.getValor_elec());
+                hogarSub.setValor_pago(hogar.getValor_elec());
+                break;
+            case "2":
+                pago = Integer.parseInt(hogar.getValor_agua());
+                hogarSub.setValor_pago(hogar.getValor_agua());
+                break;
+            case "3":
+                pago = Integer.parseInt(hogar.getValor_gas());
+                hogarSub.setValor_pago(hogar.getValor_gas());
+                break;
+        }
+
+        if (pago <= Integer.parseInt(servicio.getLimite_pago())) {
+            pago = pago - Integer.parseInt(servicio.getValor_subsidio());
+            if (pago < 0) {
+                hogarSub.setValor_pago("0");
+            } else {
+                hogarSub.setValor_pago(Integer.toString(pago));
+            }
+            hogarSub.setValor_subsidio_aplicado(servicio.getValor_subsidio());
+        } else {
+            hogarSub.setValor_subsidio_aplicado("0");
+        }
+        switch (servicio.getId_servicio()) {
+            case "1":
+                JOptionPane.showConfirmDialog(null, "Subsidio aplicado: " + hogar.getId()
+                        + "\n Electricidad: " + hogar.getValor_elec() + "\n"
+                        + hogarSub.getValor_pago() + " - " + hogarSub.getLimite_pago_aplicado() + " = " + hogarSub.getValor_subsidio_aplicado() + " \n ");
+                break;
+            case "2":
+                JOptionPane.showConfirmDialog(null, "Subsidio aplicado: " + hogar.getId()
+                        + "\n Agua: " + hogar.getValor_agua() + "\n"
+                        + hogarSub.getValor_pago() + " - " + hogarSub.getLimite_pago_aplicado() + " = " + hogarSub.getValor_subsidio_aplicado() + " \n "
+                );
+                break;
+            case "3":
+                JOptionPane.showConfirmDialog(null, "Subsidio aplicado: " + hogar.getId()
+                        + "\n gas: " + hogar.getValor_gas() + "\n"
+                        + hogarSub.getValor_pago() + " - " + hogarSub.getLimite_pago_aplicado() + " = " + hogarSub.getValor_subsidio_aplicado() + " \n "
+                );
+                break;
+        }
+        return hogarSub;
     }
 }

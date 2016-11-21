@@ -6,6 +6,7 @@
 package com.serviciosPubli.Servlets;
 
 import com.serviciosPubli.Negocio.hogaresN;
+import com.serviciosPubli.Negocio.tiposServiciosN;
 import com.serviciosPubli.Persistencia.daoHogares;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,6 +53,7 @@ public class hogaresServlet extends HttpServlet {
         String txtSearch = request.getParameter("txtSearch");
 
         hogaresN hoN = new hogaresN();
+        tiposServiciosN tsN = new tiposServiciosN();
 
         try {
             request.setAttribute("listado", hoN.listadoHogares());
@@ -100,6 +102,13 @@ public class hogaresServlet extends HttpServlet {
             try {
                 request.setAttribute("listado", hoN.listadoHogares());
                 request.setAttribute("filtro", "false");
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+        if ("aplicarSubsidio".equals(request.getParameter("action"))) {
+            try {
+                hoN.aplicarSubsidio(hoN.listaHogaresUltimoPago(), tsN.listadoTiposServicio());
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }
