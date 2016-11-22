@@ -5,7 +5,11 @@
  */
 package com.serviciosPubli.Persistencia;
 
+import com.serviciosPubli.Entidades.hogarSubsidiado;
 import com.serviciosPubli.Entidades.hogares;
+import com.serviciosPubli.Entidades.listaHogaresSub;
+import com.serviciosPubli.Entidades.pago_servicio;
+import com.serviciosPubli.Servlets.hogaresServlet;
 import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +17,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -264,6 +270,79 @@ public class daoHogares {
         }
         return false;
     }
-    
-    
+
+    public List<listaHogaresSub> filtroFechas(Connection con, String ini, String fin) {
+        List<listaHogaresSub> hogares = new ArrayList<>();
+        String[] ids = new String[200];
+        try {
+            PreparedStatement p = con.prepareStatement(SQLHelpers.getHogaresSubRangoFechas(ini, fin));
+            ResultSet registros = p.executeQuery();
+            int conId = 0;
+            int a = 1;
+            listaHogaresSub hogarAux = new listaHogaresSub();
+            while (registros.next()) {
+                boolean exit = existeElId(ids, registros.getString(1));
+                if (a == 1 && !exit) {
+                    hogarAux.setId_hogar(registros.getString(1));
+                    hogarAux.setPagoElec(registros.getString(3));
+                    hogarAux.setSubElec(registros.getString(4));
+                    hogarAux.setFecha(registros.getTimestamp(6));
+                }
+                if (a == 2 && !exit) {
+                    hogarAux.setPagoAgua(registros.getString(3));
+                    hogarAux.setSubAgua(registros.getString(4));
+                }
+                if (a == 3 && !exit) {
+                    hogarAux.setPagoGas(registros.getString(3));
+                    hogarAux.setSubGas(registros.getString(4));
+                    ids[conId] = registros.getString(1);
+                    conId++;
+                    hogares.add(hogarAux);
+                    a = 0;
+                    hogarAux = new listaHogaresSub();
+                }
+                a++;
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException clo) {
+            }
+        }
+        return hogares;
+    }
+
+    public LinkedHashMap<String, List<pago_servicio>> valoresPago(Connection con, int valIni, int valFin) {
+        LinkedHashMap<String, List<pago_servicio>> map = new LinkedHashMap<>();
+        try {
+            for (int i = 1; i < 4; i++) {
+                List<pago_servicio> listaPagos = new ArrayList<>();
+                PreparedStatement p = con.prepareStatement(SQLHelpers.getFilterRangoValores(i + "", valIni, valFin));
+                ResultSet registros = p.executeQuery();
+                Integer valor = null;
+                while (registros.next()) {
+                    if (valor == null || valor == Integer.parseInt(registros.getString(4))) {
+                        pago_servicio pago = new pago_servicio();
+                        pago.setId_hogar(registros.getString(1));
+                        pago.setId_tiposervicio(registros.getString(2));
+                        pago.setFecha(registros.getTimestamp(3));
+                        pago.setValor(registros.getString(4));
+                        valor = Integer.parseInt(registros.getString(4));
+                        listaPagos.add(pago);
+                    }
+                }
+                map.put(i+"", listaPagos);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException clo) {
+            }
+        }
+        
+        return map;
+    }
+
 }

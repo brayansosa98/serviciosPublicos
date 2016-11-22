@@ -17,7 +17,7 @@ public class SQLHelpers {
     }
 
     public static String getPagosHogar(String id) {
-        return "SELECT * FROM pagos_servicios where id_hogar=\"" + id + "\" order by fecha DESC;";
+        return "SELECT * FROM pagos_servicios where id_hogar=\"" + id + "\" order by fecha DESC, id_tiposervicio;";
     }
 
     public static String setHogar(String id) {
@@ -29,15 +29,23 @@ public class SQLHelpers {
     }
 
     public static String getPagos() {
-        return "SELECT * from pagos_servicios order by fecha DESC";
+        return "SELECT * from pagos_servicios order by fecha DESC, id_tiposervicio;";
     }
 
     public static String getDiasDiferencia(Timestamp fecha) {
         return "SELECT DATEDIFF(NOW(),'" + fecha + "');";
     }
-    
+
     public static String setGuargarHogarSubsidiado() {
         return "INSERT INTO hogares_subsidiados (id_hogar, id_tiposervicio, valor_subsidio, valor_subsidio_aplicado, limite_pago_aplicado, fecha) VALUES (?,?,?,?,?,now());";
+    }
+
+    public static String getHogaresSubRangoFechas(String ini, String fin) {
+        return "select * from hogares_subsidiados where fecha between \"" + ini + "\" and \" " + fin + " \" order by fecha DESC, id_hogar, id_tiposervicio;";
+    }
+
+    public static String getFilterRangoValores(String id, int valIni, int valFin) {
+        return "select * from pagos_servicios where id_tiposervicio = \"" + id + "\" and cast(valor as integer) between " + valIni + " and " + valFin + " order by valor;";
     }
 
 }

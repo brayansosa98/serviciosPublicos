@@ -41,6 +41,8 @@ public class hogaresServlet extends HttpServlet {
 
         request.setAttribute("targetModulo", modulo);
         request.setAttribute("listado", null);
+        request.setAttribute("listadoFiltros1", null);
+        request.setAttribute("listadoFiltros2", null);
         request.setAttribute("mensaje", null);
         request.setAttribute("filtro", null);
         String men = "";
@@ -51,6 +53,13 @@ public class hogaresServlet extends HttpServlet {
         String txtPagoGas = request.getParameter("txtPagoGas");
 
         String txtSearch = request.getParameter("txtSearch");
+
+        String txtDesde = request.getParameter("txtDesde");
+        String txtHasta = request.getParameter("txtHasta");
+        
+        String txtValorInicial = request.getParameter("txtValorInicial");
+        String txtValorFinal = request.getParameter("txtValorFinal");
+        
 
         hogaresN hoN = new hogaresN();
         tiposServiciosN tsN = new tiposServiciosN();
@@ -113,6 +122,36 @@ public class hogaresServlet extends HttpServlet {
                 request.setAttribute(men, er.getMessage());
             }
         }
+
+        if ("filtroHogar_filtro1".equals(request.getParameter("action"))) {
+            try {
+                request.setAttribute("listado", null);
+                request.setAttribute("filtro", "true");
+                String ini = txtDesde + " 00:00:00";
+                String fin = txtHasta + " 23:59:59";
+                request.setAttribute("listadoFiltro1", hoN.filtroFechas(ini, fin));
+            } catch (Exception er) {
+                request.setAttribute(men, er.getMessage());
+            }
+        }
+
+        if ("filtroHogar_filtro2".equals(request.getParameter("action"))) {
+            try {
+                request.setAttribute("listado", null);
+                request.setAttribute("listadoFiltro1", null);
+                request.setAttribute("filtro", "true");
+                boolean validoIni = hoN.valorValido(txtValorInicial, false);
+                boolean validoFin = hoN.valorValido(txtValorFinal, false);
+                if (validoIni && validoFin) {
+                    int ini = Integer.parseInt(txtValorInicial);
+                    int fin = Integer.parseInt(txtValorFinal);
+                    request.setAttribute("listadoFiltro2", hoN.valoresPago(ini, fin));
+                }
+
+            } catch (Exception e) {
+            }
+        }
+
         request.setAttribute("mensaje", men);
         request.getRequestDispatcher(pagina).forward(request, response);
     }

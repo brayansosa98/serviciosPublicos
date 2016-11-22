@@ -87,7 +87,7 @@ public class tiposServiciosN {
     public List<tipoServicio> actualizarTiposServicio(List<tipoServicio> servicios, String id, int valor) {
         for (tipoServicio servicio : servicios) {
             if (servicio.getId_servicio().equals(id)) {
-                servicio.setValor_subsidio(Integer.toString(valor));
+                servicio.setLimite_pago(Integer.toString(valor));
             }
         }
         return servicios;

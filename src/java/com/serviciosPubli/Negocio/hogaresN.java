@@ -2,12 +2,18 @@ package com.serviciosPubli.Negocio;
 
 import com.serviciosPubli.Entidades.hogarSubsidiado;
 import com.serviciosPubli.Entidades.hogares;
+import com.serviciosPubli.Entidades.listaHogaresSub;
+import com.serviciosPubli.Entidades.pago_servicio;
 import com.serviciosPubli.Entidades.tipoServicio;
+import com.serviciosPubli.Persistencia.SQLHelpers;
 import com.serviciosPubli.Persistencia.daoHogarSubsidio;
 import com.serviciosPubli.Persistencia.daoHogares;
 import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -99,9 +105,16 @@ public class hogaresN {
             hogarSubsidiado pagoElec = ordenarDatos(hogar, ListaTiposServicio.get(0));
             hogarSubsidiado pagoAgua = ordenarDatos(hogar, ListaTiposServicio.get(1));
             hogarSubsidiado pagoGas = ordenarDatos(hogar, ListaTiposServicio.get(2));
-            //Connection c;
-            //c = new Conexion().getCon();
-            //mensajeError = daoHoSub.setGuargarHogarSubsidiado(c, pagoElec, pagoAgua, pagoGas);
+            Connection c;
+            c = new Conexion().getCon();            
+            try {
+//                JOptionPane.showConfirmDialog(null, hogar.getId() + "\" Electricidad" + pagoElec.getValor_pago() 
+//                        + " \n Agua "+ pagoAgua.getValor_pago() 
+//                        + " \n Gas" + pagoElec.getValor_pago());
+                mensajeError = setGuargarHogarSubsidiado(c, pagoElec, pagoAgua, pagoGas);                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         if (!"".equals(mensajeError)) {
             throw new Exception(mensajeError);
@@ -140,25 +153,72 @@ public class hogaresN {
         } else {
             hogarSub.setValor_subsidio_aplicado("0");
         }
-        switch (servicio.getId_servicio()) {
-            case "1":
-                JOptionPane.showConfirmDialog(null, "Subsidio aplicado: " + hogar.getId()
-                        + "\n Electricidad: " + hogar.getValor_elec() + "\n"
-                        + hogarSub.getValor_pago() + " - " + hogarSub.getLimite_pago_aplicado() + " = " + hogarSub.getValor_subsidio_aplicado() + " \n ");
-                break;
-            case "2":
-                JOptionPane.showConfirmDialog(null, "Subsidio aplicado: " + hogar.getId()
-                        + "\n Agua: " + hogar.getValor_agua() + "\n"
-                        + hogarSub.getValor_pago() + " - " + hogarSub.getLimite_pago_aplicado() + " = " + hogarSub.getValor_subsidio_aplicado() + " \n "
-                );
-                break;
-            case "3":
-                JOptionPane.showConfirmDialog(null, "Subsidio aplicado: " + hogar.getId()
-                        + "\n gas: " + hogar.getValor_gas() + "\n"
-                        + hogarSub.getValor_pago() + " - " + hogarSub.getLimite_pago_aplicado() + " = " + hogarSub.getValor_subsidio_aplicado() + " \n "
-                );
-                break;
-        }
         return hogarSub;
     }
+    
+    
+    public String setGuargarHogarSubsidiado(Connection con, hogarSubsidiado pagoElec, hogarSubsidiado pagoAgua, hogarSubsidiado pagoGas) {
+        String res = "";
+        JOptionPane.showConfirmDialog(null, "hogar:" + pagoElec.getId_hogar());
+        try {
+            PreparedStatement p = con.prepareStatement(SQLHelpers.setGuargarHogarSubsidiado());
+            p.setString(1, pagoElec.getId_hogar());
+            p.setString(2, "1");
+            p.setString(3, pagoElec.getValor_pago());
+            p.setString(4, pagoElec.getValor_subsidio_aplicado());
+            p.setString(5, pagoElec.getLimite_pago_aplicado());
+            p.execute();
+        } catch (SQLException e) {
+            res += "" + e.getMessage() + " Causa :" + e.getCause();
+        } finally {
+            try {
+                PreparedStatement p = con.prepareStatement(SQLHelpers.setGuargarHogarSubsidiado());
+                p.setString(1, pagoAgua.getId_hogar());
+                p.setString(2, "2");
+                p.setString(3, pagoAgua.getValor_pago());
+                p.setString(4, pagoAgua.getValor_subsidio_aplicado());
+                p.setString(5, pagoAgua.getLimite_pago_aplicado());
+                p.execute();
+            } catch (SQLException e) {
+                res += "" + e.getMessage() + " Causa :" + e.getCause();
+            } finally {
+                try {
+                    PreparedStatement p = con.prepareStatement(SQLHelpers.setGuargarHogarSubsidiado());
+                    p.setString(1, pagoGas.getId_hogar());
+                    p.setString(2, "3");
+                    p.setString(3, pagoGas.getValor_pago());
+                    p.setString(4, pagoGas.getValor_subsidio_aplicado());
+                    p.setString(5, pagoGas.getLimite_pago_aplicado());
+                    p.execute();
+                    if (p.getUpdateCount() > 0) {
+                        res = "Subsidio aplicado";
+                    } else {
+                        res = "Error! subsidio no aplicao!";
+                    }// fin si
+                } catch (SQLException e) {
+                    res += "" + e.getMessage() + " Causa :" + e.getCause();
+                } finally {
+                    try {
+                        con.close();
+                    } catch (SQLException e2) {
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+    
+    public List<listaHogaresSub> filtroFechas(String ini, String fin) {
+        Connection c;
+        c = new Conexion().getCon();
+        return dao.filtroFechas(c, ini, fin);
+    }
+    
+    public LinkedHashMap<String, List<pago_servicio>> valoresPago(int valIni, int valFin) {
+        Connection c;
+        c = new Conexion().getCon();
+        return dao.valoresPago(c, valIni, valFin);
+    }
+    
 }
