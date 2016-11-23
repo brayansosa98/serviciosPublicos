@@ -1,5 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    String mensajeError = (String) request.getAttribute("mensajeError");
+%>
 <html ng-app="serpuApp" ng-strict-di>
     <head>
         <title>Inicio de sesión - servicios públicos</title>
@@ -13,7 +16,7 @@
         <link rel="stylesheet" href="JS/complementos/materialize/materialize.min.css">
     </head>
     <body id="body" >  
-        <form>
+        <form method="POST" action="." name="login">
             <md-grid-tile class="red" md-rowspan="2" md-colspan="2" md-colspan-sm="1" md-colspan-xs="1">
                 <md-card md-theme="dark-grey" md-theme-watch>
                     <md-card-title>
@@ -27,17 +30,18 @@
                             </md-input-container>
                             <md-input-container class="md-block flex-gt-sm" flex-gt-sm="">
                                 <label>Contraseña</label>
-                                <input id="txtPass" name="txtPass" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" required>
+                                <input type="password" id="txtPass" name="txtPass" class="ng-pristine ng-valid md-input ng-empty ng-touched" aria-invalid="false" required>
                             </md-input-container>
                         </md-card-title-media>
                     </md-card-title>
                     <md-card-actions layout="row" layout-align="end center">
                         <md-button id="btnBuscarHogar" class="md-primary md-raised"
-                                   type="submit" name="action" value="ingresar" ng-disabled="frmConsultarHogar.$invalid">
+                                   type="submit" name="action" value="ingresar" ng-disabled="login.$invalid">
                             Ingresar
                         </md-button>
                     </md-card-actions>
                 </md-card>
+                <%=mensajeError%>
             </md-grid-tile>
         </div>
     </form>

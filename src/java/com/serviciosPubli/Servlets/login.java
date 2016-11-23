@@ -5,6 +5,8 @@
  */
 package com.serviciosPubli.Servlets;
 
+import com.serviciosPubli.Entidades.usuario;
+import com.serviciosPubli.Negocio.usuarioN;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -35,9 +37,36 @@ public class login extends HttpServlet {
 
         String pagina = "./login.jsp";
         HttpSession session = request.getSession();
-        if (session == null) {
 
+        usuarioN un = new usuarioN();
+        usuario u = new usuario();
+
+        String user = request.getParameter("txtUser");
+        String clave = request.getParameter("txtPass");
+
+        String men = "";
+
+        if ("".equals(clave) || null == clave) {
+            men = "Ingrese la  contraseña";
         }
+        if ("".equals(user) || null == user) {
+            men = "Ingrese el usuario";
+        }
+        if ("".equals(clave) && "".equals(user)) {
+            men = "Ingrese el usuario y la contraseña";
+        }
+        if ("".equals(men)) {
+            u = un.getValidarIngreso(user, clave);
+            if (u.getUsuario() != "0") {
+                request.getSession(true).setAttribute("usuario", u);
+                pagina = "./index.jsp";
+            } else {
+                pagina = "./login.jsp";
+                men = "El usuario y/o contraseña no coinciden";
+            }
+        }
+
+        request.setAttribute("mensajeError", men);
         request.getRequestDispatcher(pagina).forward(request, response);
     }
 

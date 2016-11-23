@@ -56,10 +56,9 @@ public class hogaresServlet extends HttpServlet {
 
         String txtDesde = request.getParameter("txtDesde");
         String txtHasta = request.getParameter("txtHasta");
-        
+
         String txtValorInicial = request.getParameter("txtValorInicial");
         String txtValorFinal = request.getParameter("txtValorFinal");
-        
 
         hogaresN hoN = new hogaresN();
         tiposServiciosN tsN = new tiposServiciosN();
@@ -129,7 +128,7 @@ public class hogaresServlet extends HttpServlet {
                 request.setAttribute("filtro", "true");
                 String ini = txtDesde + " 00:00:00";
                 String fin = txtHasta + " 23:59:59";
-                request.setAttribute("listadoFiltro1", hoN.filtroFechas(ini, fin));
+                request.setAttribute("listadoFiltros1", hoN.filtroFechas(ini, fin));
             } catch (Exception er) {
                 request.setAttribute(men, er.getMessage());
             }
@@ -148,6 +147,16 @@ public class hogaresServlet extends HttpServlet {
                     request.setAttribute("listadoFiltro2", hoN.valoresPago(ini, fin));
                 }
 
+            } catch (Exception e) {
+            }
+        }
+
+        if ("filtroHogar_filtro3".equals(request.getParameter("action"))) {
+            try {
+                request.setAttribute("filtro", "true");
+                request.setAttribute("listadoFiltro1", null);
+                request.setAttribute("listado", null);
+                request.setAttribute("listadoFiltro2", hoN.menosConsumo());
             } catch (Exception e) {
             }
         }

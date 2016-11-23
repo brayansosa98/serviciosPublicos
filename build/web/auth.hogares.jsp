@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     List<hogares> LHO = (List<hogares>) request.getAttribute("listado");
-    List<listaHogaresSub> LHOSub = (List<listaHogaresSub>) request.getAttribute("listadoFiltro1");
+    List<listaHogaresSub> LHOSub = (List<listaHogaresSub>) request.getAttribute("listadoFiltros1");
     LinkedHashMap<String, List<pago_servicio>> LHOValorP = (LinkedHashMap<String, List<pago_servicio>>) request.getAttribute("listadoFiltro2");
 
     String men = (String) request.getAttribute("mensaje") != null ? (String) request.getAttribute("mensaje") : null;

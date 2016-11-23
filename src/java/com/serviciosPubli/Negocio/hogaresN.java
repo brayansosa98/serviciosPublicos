@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class hogaresN {
 
@@ -159,7 +158,6 @@ public class hogaresN {
     
     public String setGuargarHogarSubsidiado(Connection con, hogarSubsidiado pagoElec, hogarSubsidiado pagoAgua, hogarSubsidiado pagoGas) {
         String res = "";
-        JOptionPane.showConfirmDialog(null, "hogar:" + pagoElec.getId_hogar());
         try {
             PreparedStatement p = con.prepareStatement(SQLHelpers.setGuargarHogarSubsidiado());
             p.setString(1, pagoElec.getId_hogar());
@@ -219,6 +217,12 @@ public class hogaresN {
         Connection c;
         c = new Conexion().getCon();
         return dao.valoresPago(c, valIni, valFin);
+    }
+    
+    public LinkedHashMap<String, List<pago_servicio>> menosConsumo() {
+        Connection c;
+        c = new Conexion().getCon();
+        return dao.menosConsumo(c);
     }
     
 }

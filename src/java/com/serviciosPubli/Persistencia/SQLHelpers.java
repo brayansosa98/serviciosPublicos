@@ -4,6 +4,10 @@ import java.sql.Timestamp;
 
 public class SQLHelpers {
 
+    public static String getValidarIngreso(String user, String pwd) {
+        return "SELECT usuario, contraseña FROM usuarios where usuario =\"" + user + "\" AND contraseña=\"" + pwd + "\";";
+    }
+
     public static String getTiposServicio() {
         return "SELECT * FROM tipos_servicios";
     }
@@ -41,11 +45,15 @@ public class SQLHelpers {
     }
 
     public static String getHogaresSubRangoFechas(String ini, String fin) {
-        return "select * from hogares_subsidiados where fecha between \"" + ini + "\" and \" " + fin + " \" order by fecha DESC, id_hogar, id_tiposervicio;";
+        return "select * from hogares_subsidiados where fecha between \"" + ini + "\" and \"" + fin + "\" order by fecha DESC, id_hogar, id_tiposervicio;";
     }
 
     public static String getFilterRangoValores(String id, int valIni, int valFin) {
         return "select * from pagos_servicios where id_tiposervicio = \"" + id + "\" and cast(valor as integer) between " + valIni + " and " + valFin + " order by valor;";
+    }
+
+    public static String getFilterMenosConsumo(String id) {
+        return "select * from pagos_servicios where id_tiposervicio=\"" + id + "\" order by cast(valor as integer)";
     }
 
 }

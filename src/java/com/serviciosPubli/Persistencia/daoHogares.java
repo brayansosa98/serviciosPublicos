@@ -276,6 +276,7 @@ public class daoHogares {
         String[] ids = new String[200];
         try {
             PreparedStatement p = con.prepareStatement(SQLHelpers.getHogaresSubRangoFechas(ini, fin));
+            System.out.println(SQLHelpers.getHogaresSubRangoFechas(ini, fin));
             ResultSet registros = p.executeQuery();
             int conId = 0;
             int a = 1;
@@ -319,6 +320,38 @@ public class daoHogares {
             for (int i = 1; i < 4; i++) {
                 List<pago_servicio> listaPagos = new ArrayList<>();
                 PreparedStatement p = con.prepareStatement(SQLHelpers.getFilterRangoValores(i + "", valIni, valFin));
+                ResultSet registros = p.executeQuery();
+                Integer valor = null;
+                while (registros.next()) {
+                    if (valor == null || valor == Integer.parseInt(registros.getString(4))) {
+                        pago_servicio pago = new pago_servicio();
+                        pago.setId_hogar(registros.getString(1));
+                        pago.setId_tiposervicio(registros.getString(2));
+                        pago.setFecha(registros.getTimestamp(3));
+                        pago.setValor(registros.getString(4));
+                        valor = Integer.parseInt(registros.getString(4));
+                        listaPagos.add(pago);
+                    }
+                }
+                map.put(i+"", listaPagos);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException clo) {
+            }
+        }
+        
+        return map;
+    }
+    
+    public LinkedHashMap<String, List<pago_servicio>> menosConsumo(Connection con) {
+        LinkedHashMap<String, List<pago_servicio>> map = new LinkedHashMap<>();
+        try {
+            for (int i = 1; i < 4; i++) {
+                List<pago_servicio> listaPagos = new ArrayList<>();
+                PreparedStatement p = con.prepareStatement(SQLHelpers.getFilterMenosConsumo(i + ""));
                 ResultSet registros = p.executeQuery();
                 Integer valor = null;
                 while (registros.next()) {
