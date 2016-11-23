@@ -6,6 +6,8 @@
 package com.serviciosPubli.Persistencia;
 
 import com.serviciosPubli.Entidades.tipoServicio;
+import com.serviciosPubli.Negocio.hogaresN;
+import com.serviciosPubli.Negocio.tiposServiciosN;
 import com.serviciosPubli.Utilidades.Conexion;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ import static org.junit.Assert.*;
  * @author USER
  */
 public class daoTiposServicioTest {
+
+    daoTiposServicio daoTiSe = new daoTiposServicio();
+    tiposServiciosN tsN = new tiposServiciosN();
+    hogaresN hoN = new hogaresN();
+
+    Connection con = new Conexion().getCon();
 
     public daoTiposServicioTest() {
     }
@@ -43,40 +51,78 @@ public class daoTiposServicioTest {
     }
 
     /**
-     * Test of listaTiposServicios method, of class daoTiposServicio.
+     * Test of actualizarTipoServicio method, of class daoTiposServicio.
      */
     @Test
-    public void testListaTiposServicios() {
-        System.out.println("listaTiposServicios");
-        Connection con = new Conexion().getCon();
-        daoTiposServicio instance = new daoTiposServicio();
-        Boolean expResult = false;
-        List<tipoServicio> result = instance.listaTiposServicios(con);
-        tipoServicio tipoSe = result.get(1);
-        if (tipoSe.getId_servicio().equals("2")) {
-            expResult = true;
-        }
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        if (!expResult) {
-            fail("The test case is a prototype.");
-        }
+    public void actualizarTipoServicioElectricidadTest() {
+        System.out.println("actualizarTipoServicioElectricidad");
+        String id = "1";
+        String valor_subsidio = "5000";
+        String limite_pago = "48000";
+        String expResult = "Tipo servicio guardado con exito";
+        String result = daoTiSe.actualizarTipoServicio(con, id, valor_subsidio, limite_pago);
+        assertEquals(expResult, result);
     }
 
     /**
      * Test of actualizarTipoServicio method, of class daoTiposServicio.
      */
     @Test
-    public void testActualizarTipoServicio() {
-        System.out.println("actualizarTipoServicio");
-        Connection con = new Conexion().getCon();
-        String id = "1";
-        String valor_subsidio = "5000";
-        String limite_pago = "100000";
-        daoTiposServicio instance = new daoTiposServicio();
-        String expResult = "Tipo servicio editado";
-        String result = instance.actualizarTipoServicio(con, id, valor_subsidio, limite_pago);
+    public void actualizarTipoServicioAguaTest() {
+        System.out.println("actualizarTipoServicioAgua");
+        String id = "2";
+        String valor_subsidio = "3000";
+        String limite_pago = "40000";
+        String expResult = "Tipo servicio guardado con exito";
+        String result = daoTiSe.actualizarTipoServicio(con, id, valor_subsidio, limite_pago);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of actualizarTipoServicio method, of class daoTiposServicio.
+     */
+    @Test
+    public void actualizarTipoServicioGasTest() {
+        System.out.println("actualizarTipoServicioGas");
+        String id = "3";
+        String valor_subsidio = "7000";
+        String limite_pago = "55000";
+        String expResult = "Tipo servicio guardado con exito";
+        String result = daoTiSe.actualizarTipoServicio(con, id, valor_subsidio, limite_pago);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of promedioPago method, of class daoTiposServicio.
+     */
+    @Test
+    public void promedioPagoElectricidadTest() {
+        System.out.println("promedioPagoElectricidad");
+        String id = "1";
+        int prom = tsN.promedioPago(id, hoN.listaHogaresUltimoPago());
+        assertTrue(prom > 0);
+    }
+    
+    /**
+     * Test of promedioPago method, of class daoTiposServicio.
+     */
+    @Test
+    public void promedioPagoAguaTest() {
+        System.out.println("promedioPagoAgua");
+        String id = "2";
+        int prom = tsN.promedioPago(id, hoN.listaHogaresUltimoPago());
+        assertTrue(prom > 0);
+    }
+
+    /**
+     * Test of promedioPago method, of class daoTiposServicio.
+     */
+    @Test
+    public void promedioPagoGasTest() {
+        System.out.println("promedioPagoGas");
+        String id = "3";
+        int prom = tsN.promedioPago(id, hoN.listaHogaresUltimoPago());
+        assertTrue(prom > 0);
     }
 
 }

@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.serviciosPubli.Persistencia;
 
 import com.serviciosPubli.Entidades.hogares;
 import com.serviciosPubli.Utilidades.Conexion;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,39 +23,57 @@ import static org.junit.Assert.*;
  * @author USER
  */
 public class daoHogaresTest {
-    
+
+    Connection con = new Conexion().getCon();
+    daoHogares daoHogar = new daoHogares();
+
     public daoHogaresTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
+
+    /**
+     * Test of setGuardarHogar method, of class daoHogares.
+     */
+    @Test
+    public void setGuardarHogarTest() {
+        System.out.println("agregarHogar");
+        String id_hogar = "AB32";
+        String result = daoHogar.setGuardarHogar(con, id_hogar);
+        assertEquals(result, "Hogar agregado");
     }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+
+    /**
+     * Test of setAgregarPagoHogar method, of class daoHogares.
+     */
+    @Test
+    public void setAgregarPagoHogarTest() {
+        System.out.println("agregarPago");
+        String id_hogar = "AB32";
+        String pagoElec = "35900";
+        String pagoAgua = "25000";
+        String pagoGas = "32000";
+        String result = daoHogar.setAgregarPagoHogar(con, id_hogar, pagoElec, pagoAgua, pagoGas);
+        assertEquals(result, "Registro agregado");
     }
 
     /**
      * Test of listaHogares method, of class daoHogares.
      */
     @Test
-    public void testListaHogares() {
+    public void listaHogaresTest() {
         System.out.println("listaHogares");
-        Connection con = new Conexion().getCon();
-        daoHogares instance = new daoHogares();
-        List<hogares> expResult = null;
-        List<hogares> result = instance.listaHogares(con);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        List<hogares> result = daoHogar.listaHogares(con);
+        assertTrue(result.get(1) instanceof hogares);
     }
-    
+
+    /**
+     * Test of listaPagosHogar method, of class daoHogares.
+     */
+    @Test
+    public void listaPagosHogarTest() {
+        System.out.println("listaPagosHogar");
+        String id_hogar = "AB32";
+        List<hogares> result = daoHogar.listaPagosHogar(con, id_hogar);
+        assertEquals(result.get(1).getId(), id_hogar);
+    }
+
 }

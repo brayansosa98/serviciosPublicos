@@ -80,7 +80,7 @@ public class hogaresServlet extends HttpServlet {
                     hoN.insertarPagoHogar(txtCodigoHogar, txtPagoElec, txtPagoAgua, txtPagoGas);
                 } else {
                     if (!valCodHohgar) {
-                        men = "El código del hogar solo debe contener carecteres alfanuméricoss";
+                        men = "El código del hogar solo debe contener carecteres alfanuméricos";
                     } else if (!valPagEle) {
                         men = "El pago electricidad solo debe contener números";
                     } else if (!valPagAgu) {
